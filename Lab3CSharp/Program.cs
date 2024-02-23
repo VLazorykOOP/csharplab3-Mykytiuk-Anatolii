@@ -95,6 +95,74 @@
                 Console.WriteLine("This trapeze is not a square.");
             }
         }
+
+// Базовий клас Test
+    class Test
+    {
+        public string Subj { get; set; } // Предмет
+        public DateTime Date { get; set; }  // Дата
+
+        public virtual void Show()
+        {
+            Console.WriteLine($"Subject: {Subj}, Date: {Date}");
+        }
+    }
+
+    // Похідний клас Exam
+    class Exam : Test
+    {
+        public int Duration { get; set; } // Тривалість
+
+        public override void Show()
+        {
+            Console.WriteLine($"Type: Exam, Subject: {Subj}, Date: {Date}, Duration: {Duration} minutes");
+        }
+    }
+
+    // Похідний клас FinalExam
+    class FinalExam : Exam
+    {
+        public bool IsOral { get; set; } // Усний
+
+        public override void Show()
+        {
+            Console.WriteLine($"Type: Final Exam, Subject: {Subj}, Date: {Date}, Duration: {Duration} minutes, Oral: {IsOral}");
+        }
+    }
+
+    // Похідний клас Trial
+    class Trial : Test
+    {
+        public string Supervisor { get; set; } // Спостерігач
+
+        public override void Show()
+        {
+            Console.WriteLine($"Type: Trial, Subject: {Subj}, Date: {Date}, Supervisor: {Supervisor}");
+        }
+    }
+
+
+        static void task2()
+        {
+            // Створення масиву базового класу Test
+            Test[] tests = new Test[5];
+
+            // Заповнення масиву
+            tests[0] = new Exam { Subj = "Math", Date = DateTime.Now.AddDays(10), Duration = 90 };
+            tests[1] = new FinalExam { Subj = "History", Date = DateTime.Now.AddDays(15), Duration = 120, IsOral = false };
+            tests[2] = new Trial { Subj = "Physics", Date = DateTime.Now.AddDays(5), Supervisor = "John Smith" };
+            tests[3] = new Exam { Subj = "English", Date = DateTime.Now.AddDays(8), Duration = 60 };
+            tests[4] = new FinalExam { Subj = "Biology", Date = DateTime.Now.AddDays(20), Duration = 150, IsOral = true };
+
+            // Виведення масиву, впорядкованого за датою
+            Array.Sort(tests, (x, y) => x.Date.CompareTo(y.Date));
+
+            Console.WriteLine("Sorted array:");
+            foreach (var test in tests)
+            {
+                test.Show();
+            }
+        }
         static void Main(string[] args)
         {
             Console.WriteLine("Lab 3 ");
@@ -107,7 +175,7 @@
             switch (n)
             {
                 case 1: Console.WriteLine("You choise task 1"); task1(); break;
-                case 2: Console.WriteLine("You choise task 2"); break;
+                case 2: Console.WriteLine("You choise task 2"); task2(); break;
                 case 3: Console.WriteLine("You choise task 3"); break;
             }
         }
